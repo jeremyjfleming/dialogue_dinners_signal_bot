@@ -11,7 +11,7 @@ ENV PHONE_NUMBER=+14123456789
 RUN pip install --no-cache-dir poetry
 
 # Copy the pyproject.toml and poetry.lock files into the container
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml ./
 
 # Install the required packages using Poetry
 RUN poetry install --no-root

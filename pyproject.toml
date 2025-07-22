@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "dialogue-dinners-signal-bot"
+version = "0.1.0"
+description = ""
+authors = ["Jeremy Fleming <jeremyfleming281@gmail.com>"]
+readme = "README.md"
+packages = [{include = "dialogue_dinners_signal_bot"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+signalbot = "^0.16.0"
+sqlalchemy = "^2.0.41"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

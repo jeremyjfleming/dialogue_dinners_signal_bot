@@ -1,0 +1,15 @@
+
+services:
+  signal-cli-rest-api:
+    image: bbernhard/signal-cli-rest-api:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./signal-cli-config:/home/.local/share/signal-cli
+    environment:
+      - MODE=json-rpc
+
+  # dialogue-dinners-bot:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile

@@ -12,22 +12,27 @@ class User(Base):
     uuid: Mapped[str] = mapped_column(String(32))
     phone_number: Mapped[str]
 
-    active_pairing = relationship('User', 
-                            secondary='pairings',
-                            primaryjoin='User.id == Pairing.member1_id && Pairing.is_active == TRUE',
-                            secondaryjoin='User.id == Pairing.member2_id && Pairing.is_active == TRUE',
-                            backref='paired_with')
 
-    old_pairings = relationship('User', 
-                            secondary='pairings',
-                            primaryjoin='User.id == Pairing.member1_id && Pairing.is_active == FALSE',
-                            secondaryjoin='User.id == Pairing.member2_id && Pairing.is_active == FALSE',
-                            backref='previously_paired_with')
+    active_pairing = relationship(
+        'Pairing',
+        primaryjoin='and_(or_(User.id == Pairing.member1_id, User.id == Pairing.member2_id), Pairing.is_active)',
+        viewonly=True,
+        uselist=False
+    )
+    old_pairings = relationship(
+        'Pairing',
+        primaryjoin='and_(or_(User.id == Pairing.member1_id, User.id == Pairing.member2_id), not_(Pairing.is_active))',
+        viewonly=True,
+    )
+
+
 
 class Pairing(Base):
     __tablename__ = 'pairings'
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    member1 = relationship('User', foreign_keys='Pairing.member1_id')
+    member2 = relationship('User', foreign_keys='Pairing.member2_id')
     member1_id = Column(Integer, ForeignKey('users.id'))
     member2_id = Column(Integer, ForeignKey('users.id'))
     is_active: Mapped[bool] = mapped_column(default=True)

@@ -13,5 +13,5 @@ if __name__ == "__main__":
 
     db_service = DBService()
 
-    bot.register(CFLCommands(db_service), contacts=False, groups=['bot testing']) 
+    bot.register(CFLCommands(db_service), contacts=False, groups=[os.environ["GROUP_NAME"]]) 
     bot.start()

@@ -20,4 +20,4 @@ RUN poetry install --no-root
 COPY . .
 
 # Specify the command to run the application
-CMD ["poetry", "run", "python", "main.py"]
+CMD ["poetry", "run", "python", "dialogue_dinners_signal_bot/main.py"]

@@ -9,10 +9,10 @@ services:
     environment:
       - MODE=json-rpc
 
-  # dialogue-dinners-bot:
-  #   image: ghcr.io/jeremyjfleming/dialogue-dinners-bot:latest
-  #   environment:
-  #     - SIGNAL_API_URL=http://signal-cli-rest-api:8080
-  #     - SIGNAL_PHONE_NUMBER=+14125230099  # Replace with your Signal phone number
-  #   depends_on:
-  #     - signal-cli-rest-api
+  dialogue-dinners-bot:
+    image: ghcr.io/jeremyjfleming/dialogue-dinners-bot:latest
+    environment:
+      - SIGNAL_API_URL=http://signal-cli-rest-api:8080
+      - SIGNAL_PHONE_NUMBER=+14125230099  # Replace with your Signal phone number
+    depends_on:
+      - signal-cli-rest-api

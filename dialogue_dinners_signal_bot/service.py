@@ -38,9 +38,15 @@ class DBService:
         with Session(self.engine) as session:
             # add users to the database
             for user in user_list:
+                # check if user already exists
+                existing_user = session.query(User).filter(User.uuid == user["uuid"]).first()
+                if existing_user:
+                    print(f"User {user['uuid']} already exists in the database.")
+                    continue
                 user = User(phone_number=user["number"], uuid=user["uuid"])
                 session.add(user)
             session.commit()    
+
         
 
     def get_pairings(self):
@@ -55,28 +61,25 @@ class DBService:
                 print("Not enough users to generate pairs.")
                 return []
 
-            for i in range(2**len(users)): # all combinations of pairs
-                # TODO: this will cause duplicates that are checked. figure out a better way to go through all possible pairings
+            for i in range(len(users)): # all combinations of pairs
 
-                random.shuffle(users)
                 pairs = []
-                for j in range(0, len(users), 2):
-                    if j + 1 < len(users):
-                        # check if pair already exists
-                        if not self._isPair(users[j], users[j + 1]):
-                            pairs.append((users[j], users[j + 1]))
-                        else:
-                            # if the pair already exists, break and try again with new shuffle
-                            pairs = []
-                            break
+                random.shuffle(users)  # shuffle the users to get random pairs
+                for j in range(i + 1, len(users)):
+                    if not self._isPair(users[i], users[j]):
+                        pairs.append((users[i], users[j]))
+                    else:
+                        # if the pair already exists, break and try again with new shuffle
+                        pairs = []
+                        break
                 if len(pairs) > 0:
                     # add the pairs to the database
                     for pair in pairs:
                         new_pairing = Pairing(member1=pair[0], member2=pair[1])
                         session.add(new_pairing)
                     session.commit()
-                    return pairs  
-
+                    return [(pairs.member1.uuid, pairs.member2.uuid) for pair in pairs]  
+            return []  # no valid pairs found, return empty list
     def regenerate(self):
         with Session(self.engine) as session:
             # delete all active pairings
@@ -106,8 +109,4 @@ class DBService:
                     Pairing.member2.has(User.id == user_1.id),
                 ).first()
             return pair is not None
-    def _genRandomPairs(self, items):
-        # Shuffle the list and create pairs
-        
-        return pairs
 

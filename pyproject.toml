@@ -8,7 +8,7 @@ packages = [{include = "dialogue_dinners_signal_bot"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-signalbot = {path = "../signalbot", develop=true}
+signalbot = "^0.17.0"
 sqlalchemy = "^2.0.41"
 
 

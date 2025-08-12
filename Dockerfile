@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir poetry
 COPY pyproject.toml ./
 
 # Install the required packages using Poetry
-RUN poetry install --no-root
+RUN poetry install
 
 # Copy the rest of the application code into the container
 COPY . .

@@ -6,14 +6,19 @@ services:
       - "8080:8080"
     volumes:
       - ./signal-cli-config:/home/.local/share/signal-cli
+      - ./data:/data
     environment:
       - MODE=json-rpc
 
   dialogue-dinners-bot:
     image: ghcr.io/jeremyjfleming/dialogue_dinners_signal_bot:main
     environment:
-      - SIGNAL_API_URL=http://signal-cli-rest-api:8080
-      - SIGNAL_PHONE_NUMBER=+14125230099  # Replace with your Signal phone number
-      - GROUP_NAME="bot testing"  # Replace with your group name
+      - SIGNAL_SERVICE=signal-cli-rest-api:8080
+      - PHONE_NUMBER=+14125230099  # Replace with your Signal phone number
+      - GROUP_NAME=bot testing,Case For Life  # Replace with your group name
     depends_on:
       - signal-cli-rest-api
+
+
+
+

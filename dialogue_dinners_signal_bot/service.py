@@ -8,7 +8,7 @@ class DBService:
     
 
     def __init__(self):    
-        self.engine = create_engine("sqlite:///dialogue_dinners.db", echo=True)
+        self.engine = create_engine("sqlite:///data/dialogue_dinners.db", echo=True)
         Base.metadata.create_all(self.engine)
 
     def complete(self, user_1, user_2):

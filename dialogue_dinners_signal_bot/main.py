@@ -10,8 +10,8 @@ if __name__ == "__main__":
         "phone_number": os.environ["PHONE_NUMBER"]
     })
 
-
     db_service = DBService()
 
-    bot.register(CFLCommands(db_service), contacts=False, groups=[os.environ["GROUP_NAME"]]) 
+
+    bot.register(CFLCommands(db_service), contacts=False, groups=os.environ["GROUP_NAME"].split(",")) 
     bot.start()

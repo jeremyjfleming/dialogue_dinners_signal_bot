@@ -20,7 +20,7 @@ class CFLCommands(Command):
             list_pairs.append({"author": pair[1], "start": pos_index+1, "length": 1})
             pos_index += 1
 
-        await c.edit(response, None, list_pairs, edit_timestamp=c.message.timestamp)
+        await c.edit(response, mentions=list_pairs, edit_timestamp=c.message.timestamp)
 
     async def handle(self, c: Context):
     

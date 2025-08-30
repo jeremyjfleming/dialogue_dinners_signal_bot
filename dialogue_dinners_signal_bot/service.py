@@ -67,7 +67,7 @@ class DBService:
                 usedUsers = []
                 random.shuffle(users)  # shuffle the users to get random pairs
                 for j in range(i + 1, len(users)):
-                    if not self._isPair(users[i], users[j] and not (users[i] in usedUsers or users[j] in usedUsers)):
+                    if not self._isPair(users[i], users[j]) and not (users[i] in usedUsers or users[j] in usedUsers):
                         pairs.append((users[i], users[j]))
                         usedUsers.append(users[i])
                         usedUsers.append(users[j])

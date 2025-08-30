@@ -23,9 +23,8 @@ class CFLCommands(Command):
         await c.edit(response, mentions=list_pairs, edit_timestamp=c.message.timestamp)
 
     async def handle(self, c: Context):
-    
 
-        if c.message.text.startswith("!dd") and c.message.source_number == os.environ["PHONE_NUMBER"]:
+        if c.message.text and c.message.text.startswith("!dd") and c.message.source_number == os.environ["PHONE_NUMBER"]:
             command = c.message.text.split(" ")[1].strip().lower()
             if command == "test":
                 await c.edit("Pairings are working!", edit_timestamp=c.message.timestamp)

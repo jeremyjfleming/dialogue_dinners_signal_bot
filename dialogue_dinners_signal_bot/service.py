@@ -64,13 +64,17 @@ class DBService:
             for i in range(len(users)): # all combinations of pairs
 
                 pairs = []
+                usedUsers = []
                 random.shuffle(users)  # shuffle the users to get random pairs
                 for j in range(i + 1, len(users)):
-                    if not self._isPair(users[i], users[j] or not ((users[i], users[j]) in pairs or (users[j], users[i]) in pairs)):
+                    if not self._isPair(users[i], users[j] and not (users[i] in usedUsers or users[j] in usedUsers)):
                         pairs.append((users[i], users[j]))
+                        usedUsers.append(users[i])
+                        usedUsers.append(users[j])
                     else:
                         # if the pair already exists, break and try again with new shuffle
                         pairs = []
+                        usedUsers = []
                         break
                 if len(pairs) > 0:
                     # add the pairs to the database
@@ -78,7 +82,7 @@ class DBService:
                         new_pairing = Pairing(member1=pair[0], member2=pair[1])
                         session.add(new_pairing)
                     session.commit()
-                    return [(pair.member1.uuid, pair.member2.uuid) for pair in pairs]  
+                    return [(pair[0].uuid, pair[1].uuid) for pair in pairs]  
             return []  # no valid pairs found, return empty list
     def regenerate(self):
         with Session(self.engine) as session:

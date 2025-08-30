@@ -7,6 +7,7 @@ readme = "README.md"
 packages = [{include = "dialogue_dinners_signal_bot"}]
 package-mode = false
 
+
 [tool.poetry.dependencies]
 python = "^3.10"
 signalbot = "^0.18.1"
